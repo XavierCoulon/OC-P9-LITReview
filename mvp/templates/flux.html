@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Flux</h1>
+        {% for ticket in tickets %}
+            <h3>{{ ticket.title }}</h3>
+            {{ ticket.description }}
+        {% endfor %}
+
+        {% for review in reviews %}
+            <h3>{{ review.headline }}</h3>
+            {{ review.body }}
+        {% endfor %}
+{% endblock %}

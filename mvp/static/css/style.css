@@ -1,0 +1,7 @@
+nav {
+    background-color: yellow;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
