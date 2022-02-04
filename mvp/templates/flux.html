@@ -2,8 +2,13 @@
 
 {% block content %}
     <h1>Flux</h1>
+
+
+        <p><a href="{% url 'create_ticket' %}"> Créer un ticket </a></p>
+
+
         {% for ticket in tickets %}
-            <h3>{{ ticket.title }}</h3>
+            <a href="{% url 'update_ticket' pk=ticket.id %}"><h3>{{ ticket.title }}</h3></a>
             {{ ticket.description }}
         {% endfor %}
 
