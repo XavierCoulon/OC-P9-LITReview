@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Visualisation d'un ticket</h1>
+    <p>{{ ticket.title }}</p>
+    <p>{{ ticket.description }}</p>
+    <p><img src="{{ MEDIA_URL }}{{ ticket.image }}"/> </p>
+
+{% endblock %}
