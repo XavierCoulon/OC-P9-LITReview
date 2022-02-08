@@ -43,7 +43,7 @@ class UserFollowsCreateView(CreateView):
 	# 	kwargs["request"] = self.request
 	# 	return kwargs
 
-	# def form_valid(self, form):
-	# 	form.instance.user = self.request.user
-	# 	return super(UserFollowsCreateView, self).form_valid(form)
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super(UserFollowsCreateView, self).form_valid(form)
 

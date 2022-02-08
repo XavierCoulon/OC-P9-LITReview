@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Visualisation d'une critique</h1>
+    <p>{{ review.headline }}</p>
+    <p>{{ review.body }}</p>
+
+    <h2>Ticket lié</h2>
+
+{% endblock %}
+
+<!--  include "view_ticket.html" with ticket.title="test" ticket.description="test"-->

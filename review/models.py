@@ -11,7 +11,6 @@ class Ticket(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        print("coucou")
         return self.title
 
 

@@ -15,21 +15,21 @@ class UserFollowsForm(ModelForm):
 	class Meta:
 		model = UserFollows
 		fields = ["followed_user"]
-		widgets = {"followed_user": TextInput}
+		#widgets = {"followed_user": TextInput}
 
-	def clean_followed_user(self):
-		# Test code de Benjamin
-		print("clean")
-		username = self.cleaned_data.get("followed_user", None)
-		print(username)
-		users = User.objects.all()
-		if username == str(self.user):
-			raise ValidationError("Vous ne pouvez pas vous follow")
-		elif username not in [user.username for user in users]:
-			raise ValidationError("Cet utilisateur n'existe pas")
-		else:
-			followed_user = get_object_or_404(User, username=username)
-		return followed_user
+	# def clean_followed_user(self):
+	# 	# Test code de Benjamin
+	# 	print("clean")
+	# 	username = self.cleaned_data.get("followed_user", None)
+	# 	print(username)
+	# 	users = User.objects.all()
+	# 	if username == str(self.user):
+	# 		raise ValidationError("Vous ne pouvez pas vous follow")
+	# 	elif username not in [user.username for user in users]:
+	# 		raise ValidationError("Cet utilisateur n'existe pas")
+	# 	else:
+	# 		followed_user = get_object_or_404(User, username=username)
+	# 	return followed_user
 
 	# def save(self, commit=True):
 	# 	# user_follow = super(FollowForm, self).save(commit=False)

@@ -1,19 +1,49 @@
+from itertools import chain
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db.models import Value, CharField, Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView
 from review.models import Ticket, Review
 from review.forms import TicketForm, ReviewForm
+from users.models import UserFollows
+
+
+def viewable_tickets(user):
+	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
+	tickets = Ticket.objects.filter(
+		Q(user_id=user) | Q(user_id__in=followed_users)
+	)
+	return tickets
+
+
+def viewable_reviews(user):
+	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
+	tickets = [ticket.id for ticket in Ticket.objects.filter(user_id=user)]
+	reviews = Review.objects.filter(
+		Q(user_id=user) | Q(user_id__in=followed_users) | Q(ticket__in=tickets)
+	)
+	return reviews
 
 
 @login_required
 def flux(request):
-	tickets = Ticket.objects.filter(user_id=request.user)
-	reviews = Review.objects.filter(user_id=request.user)
-	return render(request, "flux.html", context={"tickets": tickets, "reviews": reviews})
+	tickets = viewable_tickets(request.user)
+	tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+	reviews = viewable_reviews(request.user)
+	reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
+
+	posts = sorted(
+		chain(tickets, reviews),
+		key=lambda post: post.time_created,
+		reverse=True
+	)
+
+	return render(request, "flux.html", context={"posts": posts})
 
 
 class SignUpView(CreateView):
@@ -61,6 +91,13 @@ class ReviewCreateView(CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super(ReviewCreateView, self).form_valid(form)
+
+
+class ReviewDetailView(DetailView):
+	model = Review
+	template_name = "view_review.html"
+	context_object_name = "review"
+	# success_url = reverse_lazy("flux")
 
 
 def create_ticket_review(request):
