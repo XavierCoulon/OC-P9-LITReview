@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.forms import AuthenticationForm
 from django.urls import path, include
+from django.contrib.auth import views
 
 from . import settings
-from .views import index
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", views.LoginView.as_view(template_name="index.html", authentication_form=AuthenticationForm), name="index"),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls")),
     path("review/", include("review.urls")),

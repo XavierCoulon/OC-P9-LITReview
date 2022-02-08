@@ -9,10 +9,6 @@ from review.models import Ticket, Review
 from review.forms import TicketForm, ReviewForm
 
 
-def index(request):
-	return render(request, "index.html")
-
-
 @login_required
 def flux(request):
 	tickets = Ticket.objects.filter(user_id=request.user)

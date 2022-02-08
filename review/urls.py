@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.contrib.auth.decorators import login_required
 from django.urls import path
-from .views import index, TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux
+from .views import TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux
 
 
 urlpatterns = [
-    path("", index, name="index"),
     path("flux/", flux, name="flux"),
     path("create_ticket/", login_required(TicketCreateView.as_view()), name="create_ticket"),
     path("create_review/", login_required(ReviewCreateView.as_view()), name="create_review"),
