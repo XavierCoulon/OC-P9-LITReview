@@ -20,30 +20,14 @@ class SignUpView(CreateView):
 	success_url = reverse_lazy("login")
 
 
-# def subscription(request):
-# 	form = SubscriptionForm()
-# 	if request.method == "POST":
-# 		followed = SubscriptionForm(request.POST).data["search"]
-# 		if User.objects.get(username=followed):
-# 			print("OK")
-# 			print(User.objects.get(username=followed).id)
-# 			UserFollows.objects.create(followed_user=User.objects.get(username=followed), user=request.user)
-#
-# 	return render(request, "subscription.html", {"form": form})
-
-
 class UserFollowsCreateView(CreateView):
 	model = UserFollows
 	template_name = "create_followup.html"
 	form_class = UserFollowsForm
 	success_url = reverse_lazy("flux")
 
-	# def get_form_kwargs(self):
-	# 	kwargs = super(UserFollowsForm, self).get_form_kwargs()
-	# 	kwargs["request"] = self.request
-	# 	return kwargs
-
-	def form_valid(self, form):
-		form.instance.user = self.request.user
-		return super(UserFollowsCreateView, self).form_valid(form)
+	def get_form_kwargs(self):
+		kwargs = super().get_form_kwargs()
+		kwargs["user"] = self.request.user
+		return kwargs
 

@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Création d'une critique </h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Créer">
 
-    </form>
+
+    {% include "snippet_ticket.html" with ticket=ticket %}
+
+
+    <div class="review">
+        <h1>Création d'une critique à partir d'un ticket </h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Créer">
+        </form>
+    </div>
 {% endblock %}

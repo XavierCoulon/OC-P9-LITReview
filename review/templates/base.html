@@ -9,18 +9,21 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>LITReview</title>
 </head>
+
 <body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">LITReview</a></li>
+            <li><a href="{% url 'flux' %}">Flux</a></li>
+            <li><a href="{% url 'create_followup' %}">Abonnements</a></li>
+            <li><a href="{% url 'index' %}">Posts</a></li>
+            <li><a href="{% url 'index' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
 
-<nav>
-    <a href="{% url 'index' %}">LITReview</a>
-    <a href="{% url 'flux' %}">Flux</a>
-    <a href="{% url 'create_followup' %}">Abonnements</a>
-    <a href="{% url 'index' %}">Posts</a>
-    <a href="{% url 'index' %}">Déconnexion</a>
-</nav>
-
-{% block content %}
-{%endblock %}
-
+    <div class="container">
+        {% block content %}
+        {%endblock %}
+    </div>
 </body>
 </html>

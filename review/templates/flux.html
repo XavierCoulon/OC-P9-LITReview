@@ -1,17 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+   <div class="flux">
     <h1>Flux</h1>
 
         <p><a href="{% url 'create_ticket' %}"> Créer un ticket </a></p>
-        <p><a href="{% url 'create_review' %}"> Créer une critique </a></p>
+        <p><a href="{% url 'create_ticket_review' %}"> Créer une critique </a></p>
 
-        {% for post in posts %}
-            {% if post.content_type == "TICKET" %}
-                <p><a href="{% url 'view_ticket' pk=post.id %}">TICKET: {{ post.title }}</a></p>
-            {% elif post.content_type == "REVIEW" %}
-                <p><a href="{% url 'view_review' pk=post.id %}">REVIEW: {{ post.headline }}</a></p>
-            {% endif %}
-        {% endfor %}
+            {% for post in posts %}
+                {% if post.content_type == "TICKET" %}
+                    <div class="post">
+                        <p><a href="{% url 'view_ticket' pk=post.id %}">TICKET: {{ post.title }}</a></p>
+                        {% include "snippet_ticket.html" with ticket=post %}
+                        <p><a href="{% url 'create_review'%}?ticket_id={{post.id}}">Créer critique</a></p>
+                    </div>
+                {% elif post.content_type == "REVIEW" %}
+                    <div class="post">
+                        <p><a href="{% url 'view_review' pk=post.id %}">REVIEW: {{ post.headline }}</a></p>
+                        {% include "snippet_review.html" with review=post ticket=post.ticket %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+   </div>
+
 
 {% endblock %}

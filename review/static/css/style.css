@@ -1,7 +1,30 @@
+body {
+    padding-top: 50px;
+}
+
 nav {
-    background-color: yellow;
-    color: white;
-    display: flex;
-    justify-content: center;
+    position: fixed;
+    top: 0;
+    height: 50px;
+    background-color:silver;
     width: 100%;
 }
+
+ul {
+    height: 100%;
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.post {
+    border: solid;
+
+}
+

@@ -85,11 +85,20 @@ class TicketUpdateView(UpdateView):
 class ReviewCreateView(CreateView):
 	model = Review
 	template_name = "create_review.html"
-	fields = "__all__"
+	fields = ["rating", "headline", "body"]
 	success_url = reverse_lazy("flux")
+
+	def get_context_data(self, **kwargs):
+		context = super(ReviewCreateView, self).get_context_data(**kwargs)
+		ticket_id = self.request.GET.get("ticket_id")
+		ticket = Ticket.objects.get(pk=ticket_id)
+		context["ticket"] = ticket
+		return context
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
+		ticket_id = self.request.GET.get("ticket_id")
+		form.instance.ticket = Ticket.objects.get(pk=ticket_id)
 		return super(ReviewCreateView, self).form_valid(form)
 
 
@@ -98,6 +107,15 @@ class ReviewDetailView(DetailView):
 	template_name = "view_review.html"
 	context_object_name = "review"
 	# success_url = reverse_lazy("flux")
+
+	def get_context_data(self, **kwargs):
+		context = super(ReviewDetailView, self).get_context_data(**kwargs)
+		ticket = Review.objects.get(pk=self.kwargs["pk"])
+		print(ticket.ticket_id)
+		ticket = Ticket.objects.get(pk=ticket.ticket_id)
+		print(ticket.__dict__)
+		context["ticket"] = ticket
+		return context
 
 
 def create_ticket_review(request):
