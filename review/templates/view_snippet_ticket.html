@@ -1,0 +1,14 @@
+
+{% block content %}
+    <div class="snippet_ticket">
+        <h1>Visualisation d'un ticket</h1>
+        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.description }}</p>
+        <p>{{ ticket.image }}</p>
+        <p>
+            {% if not review_exists %}
+                <a href="{% url 'create_review'%}?ticket_id={{ticket.id}}">Créer critique</a></p>
+            {% endif %}
+    </div>
+
+{% endblock %}

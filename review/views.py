@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import Value, CharField, Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView
 from review.models import Ticket, Review
@@ -18,6 +18,7 @@ def viewable_tickets(user):
 	tickets = Ticket.objects.filter(
 		Q(user_id=user) | Q(user_id__in=followed_users)
 	)
+
 	return tickets
 
 
@@ -27,6 +28,9 @@ def viewable_reviews(user):
 	reviews = Review.objects.filter(
 		Q(user_id=user) | Q(user_id__in=followed_users) | Q(ticket__in=tickets)
 	)
+
+	ticket_avec_review = [review.ticket_id for review in Review.objects.all()]
+	print(ticket_avec_review)
 	return reviews
 
 
@@ -44,6 +48,22 @@ def flux(request):
 	)
 
 	return render(request, "flux.html", context={"posts": posts})
+
+
+@login_required
+def myposts(request):
+	tickets = Ticket.objects.filter(user=request.user)
+	tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
+	reviews = Review.objects.filter(user=request.user)
+	reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
+
+	posts = sorted(
+		chain(tickets, reviews),
+		key=lambda post: post.time_created,
+		reverse=True
+	)
+
+	return render(request, "myposts.html", context={"posts": posts})
 
 
 class SignUpView(CreateView):
@@ -68,18 +88,46 @@ class TicketDetailView(DetailView):
 	model = Ticket
 	template_name = "view_ticket.html"
 	context_object_name = "ticket"
-	# success_url = reverse_lazy("flux")
+
+
+class SnippetTicketDetailView(DetailView):
+	model = Ticket
+	template_name = "view_snippet_ticket.html"
+	context_object_name = "ticket"
+
+	def get_context_data(self, **kwargs):
+		context = super(SnippetTicketDetailView, self).get_context_data(**kwargs)
+		print(self.kwargs["pk"])
+		#if Review.objects.get(ticket=self.kwargs["pk"]):
+		#	context["review"] = True
+		try:
+			if Review.objects.get(ticket=self.kwargs["pk"]):
+				context["review_exists"] = True
+		except Review.DoesNotExist:
+			pass
+		return context
 
 
 class TicketUpdateView(UpdateView):
 	model = Ticket
 	template_name = "update_ticket.html"
 	fields = ["title", "description", "image"]
-	success_url = reverse_lazy("flux")
+	success_url = reverse_lazy("myposts")
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super(TicketUpdateView, self).form_valid(form)
+
+
+class ReviewUpdateView(UpdateView):
+	model = Review
+	template_name = "update_review.html"
+	fields = ["rating", "headline", "body"]
+	success_url = reverse_lazy("myposts")
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super(ReviewUpdateView, self).form_valid(form)
 
 
 class ReviewCreateView(CreateView):
@@ -116,6 +164,18 @@ class ReviewDetailView(DetailView):
 		print(ticket.__dict__)
 		context["ticket"] = ticket
 		return context
+
+
+def delete_ticket(request, pk):
+	ticket = Ticket.objects.get(pk=pk)
+	ticket.delete()
+	return redirect("myposts")
+
+
+def delete_review(request, pk):
+	review = Review.objects.get(pk=pk)
+	review.delete()
+	return redirect("myposts")
 
 
 def create_ticket_review(request):

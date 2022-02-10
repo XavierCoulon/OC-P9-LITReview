@@ -16,14 +16,19 @@ Including another URLconf
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 from .views import TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux, \
-    ReviewDetailView
+    ReviewDetailView, ReviewUpdateView, myposts, delete_review, delete_ticket, SnippetTicketDetailView
 
 urlpatterns = [
     path("flux/", flux, name="flux"),
+    path("myposts/", myposts, name="myposts"),
     path("create_ticket/", login_required(TicketCreateView.as_view()), name="create_ticket"),
     path("create_review/", login_required(ReviewCreateView.as_view()), name="create_review"),
     path("create_ticket_review/", login_required(create_ticket_review), name="create_ticket_review"),
-    path("update_ticket/<str:pk>/", login_required(TicketUpdateView.as_view()), name="update_ticket"),
-    path("view_ticket/<str:pk>/", login_required(TicketDetailView.as_view()), name="view_ticket"),
-    path("view_review/<str:pk>/", login_required(ReviewDetailView.as_view()), name="view_review"),
+    path("update_ticket/<int:pk>/", login_required(TicketUpdateView.as_view()), name="update_ticket"),
+    path("update_review/<int:pk>/", login_required(ReviewUpdateView.as_view()), name="update_review"),
+    path("view_ticket/<int:pk>/", login_required(TicketDetailView.as_view()), name="view_ticket"),
+    path("view_snippet_ticket/<int:pk>/", login_required(SnippetTicketDetailView.as_view()), name="view_snippet_ticket"),
+    path("view_review/<int:pk>/", login_required(ReviewDetailView.as_view()), name="view_review"),
+    path("delete_ticket/<int:pk>/", delete_ticket, name="delete_ticket"),
+    path("delete_review/<int:pk>/", delete_review, name="delete_review"),
     ]

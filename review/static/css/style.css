@@ -28,3 +28,8 @@ ul {
 
 }
 
+#followup {
+    display: flex;
+    justify-content: center;
+}
+

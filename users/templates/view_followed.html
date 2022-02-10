@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <h1>Visualisation des users suives</h1>
+        <p>
+            {% for user in users %}
+                {{ user.followed_user }}
+        </p>
+    </div>
+
+{% endblock %}
+

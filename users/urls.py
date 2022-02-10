@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib.auth.decorators import login_required
 from django.urls import path, include
-from .views import SignUpView, UserFollowsCreateView
+from .views import SignUpView, UserFollowsCreateView, delete_followup
 
 urlpatterns = [
     path("accounts/signup/", SignUpView.as_view(), name="signup"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("create_followup/", login_required(UserFollowsCreateView.as_view()), name="create_followup"),
+    path("delete_followup/<int:id>/", delete_followup, name="delete_followup"),
+    # path("view_followup/", login_required(FollowUpDetailView.as_view()), name="view_followup"),
 ]

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <div class="flux">
+    <h1>Mes Posts</h1>
+
+            {% for post in posts %}
+                {% if post.content_type == "TICKET" %}
+                    <div class="post">
+                        <p>TICKET: {{ post.title }}</p>
+                        {% include "view_snippet_ticket.html" with ticket=post %}
+                        <p><a href="{% url 'update_ticket' pk=post.id%}">Modifier</a></p>
+                        <p><a href="{% url 'delete_ticket' pk=post.id%}">Supprimer</a></p>
+                    </div>
+                {% elif post.content_type == "REVIEW" %}
+                    <div class="post">
+                        <p>REVIEW: {{ post.headline }}</p>
+                        {% include "view_snippet_review.html" with review=post ticket=post.ticket %}
+                        <p><a href="{% url 'update_review' pk=post.id%}">Modifier</a></p>
+                        <p><a href="{% url 'delete_review' pk=post.id%}">Supprimer</a></p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+   </div>
+
+
+{% endblock %}

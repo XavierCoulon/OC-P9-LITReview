@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>S'abonner à un utilisateur</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="S'abonner">
-    </form>
+    <div id="followup">
+        <div>
+            <h1>S'abonner à un utilisateur</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="S'abonner">
+            </form>
+        </div>
+
+        <div>
+            <h1>Abonnement</h1>
+            <p> {% for user in followups %}
+                    {{ user.followed_user }}
+                <a href="{% url 'delete_followup' id=user.id %}">Supprimer</a>
+                {% endfor %}
+            </p>
+        </div>
+
+        <div>
+            <h1>Abonnés</h1>
+            <p> {% for user in followers %}
+                    {{ user.user }}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
 {% endblock %}

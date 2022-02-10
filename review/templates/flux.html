@@ -11,13 +11,12 @@
                 {% if post.content_type == "TICKET" %}
                     <div class="post">
                         <p><a href="{% url 'view_ticket' pk=post.id %}">TICKET: {{ post.title }}</a></p>
-                        {% include "snippet_ticket.html" with ticket=post %}
-                        <p><a href="{% url 'create_review'%}?ticket_id={{post.id}}">Créer critique</a></p>
+                        {% include "view_snippet_ticket.html" with ticket=post review_exists=True %}
                     </div>
                 {% elif post.content_type == "REVIEW" %}
                     <div class="post">
                         <p><a href="{% url 'view_review' pk=post.id %}">REVIEW: {{ post.headline }}</a></p>
-                        {% include "snippet_review.html" with review=post ticket=post.ticket %}
+                        {% include "view_snippet_review.html" with review=post ticket=post.ticket %}
                     </div>
                 {% endif %}
             {% endfor %}
