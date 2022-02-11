@@ -14,29 +14,39 @@ from users.models import UserFollows
 
 
 def viewable_tickets(user):
+
+	# Liste des utilisateur suivis
 	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
+	# Liste des tickets ayant une critique
+	tickets_with_review_ids = [review.ticket_id for review in Review.objects.all()]
+	# Liste des tickets: ceux de l'utilisateur + ceux dont les utilisateurs sont dans l'abonnement
 	tickets = Ticket.objects.filter(
 		Q(user_id=user) | Q(user_id__in=followed_users)
 	)
+	# Liste des tickets avec critique
+	tickets_with_review = tickets.filter(id__in=tickets_with_review_ids)
 
-	return tickets
+	return tickets, tickets_with_review
 
 
 def viewable_reviews(user):
+
+	# Liste des utilisateur suivis
 	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
+	# Liste des tickets de l'utilisateur
 	tickets = [ticket.id for ticket in Ticket.objects.filter(user_id=user)]
+	# Liste des critiques de l'utilisateur + celles des utilisateurs suivis + celles dont le ticket a été créé par l'utilisateur
 	reviews = Review.objects.filter(
 		Q(user_id=user) | Q(user_id__in=followed_users) | Q(ticket__in=tickets)
 	)
 
-	ticket_avec_review = [review.ticket_id for review in Review.objects.all()]
-	print(ticket_avec_review)
 	return reviews
 
 
 @login_required
 def flux(request):
-	tickets = viewable_tickets(request.user)
+
+	tickets = viewable_tickets(request.user)[0]
 	tickets = tickets.annotate(content_type=Value("TICKET", CharField()))
 	reviews = viewable_reviews(request.user)
 	reviews = reviews.annotate(content_type=Value("REVIEW", CharField()))
@@ -47,7 +57,9 @@ def flux(request):
 		reverse=True
 	)
 
-	return render(request, "flux.html", context={"posts": posts})
+	tickets_with_review = viewable_tickets(request.user)[1]
+
+	return render(request, "flux.html", context={"posts": posts, "tickets_with_review": tickets_with_review})
 
 
 @login_required
@@ -95,17 +107,16 @@ class SnippetTicketDetailView(DetailView):
 	template_name = "view_snippet_ticket.html"
 	context_object_name = "ticket"
 
-	def get_context_data(self, **kwargs):
-		context = super(SnippetTicketDetailView, self).get_context_data(**kwargs)
-		print(self.kwargs["pk"])
-		#if Review.objects.get(ticket=self.kwargs["pk"]):
-		#	context["review"] = True
-		try:
-			if Review.objects.get(ticket=self.kwargs["pk"]):
-				context["review_exists"] = True
-		except Review.DoesNotExist:
-			pass
-		return context
+	# def get_context_data(self, **kwargs):
+	# 	context = super(SnippetTicketDetailView, self).get_context_data(**kwargs)
+	# 	print(self.kwargs["pk"])
+	#
+	# 	try:
+	# 		if Review.objects.get(ticket=self.kwargs["pk"]):
+	# 			context["review_exists"] = True
+	# 	except Review.DoesNotExist:
+	# 		pass
+	# 	return context
 
 
 class TicketUpdateView(UpdateView):
@@ -179,25 +190,21 @@ def delete_review(request, pk):
 
 
 def create_ticket_review(request):
+	ticket_form = TicketForm()
+	review_form = ReviewForm()
+
 	if request.method == "POST":
 		ticket_form = TicketForm(request.POST, request.FILES)
-		print(ticket_form)
 		review_form = ReviewForm(request.POST)
 		if ticket_form.is_valid() and review_form.is_valid():
 			ticket = ticket_form.save(commit=False)
 			ticket.user = request.user
-			print(ticket.user)
-			print(ticket.image)
 			ticket.save()
 			review = review_form.save(commit=False)
 			review.user = request.user
 			review.ticket = ticket
 			review.save()
-		return HttpResponseRedirect(request.path)
-	else:
-		ticket_form = TicketForm()
-		review_form = ReviewForm()
-
+		return HttpResponseRedirect("../flux")
 	return render(request, "create_ticket_review.html", context={"ticket": ticket_form, "review": review_form})
 
 

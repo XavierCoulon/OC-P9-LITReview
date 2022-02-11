@@ -4,7 +4,7 @@
     <h1>Création du ticket</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ ticket }}
+        {{ ticket.as_p }}
 
      <h1>Création de la critique </h1>
         {% csrf_token %}

@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.forms import ModelForm, Form, CharField, TextInput
 from users.models import UserFollows
 
 
-User = get_user_model()
+#User = get_user_model()
 
 
 class UserFollowsForm(ModelForm):
@@ -23,10 +24,16 @@ class UserFollowsForm(ModelForm):
 		username = self.cleaned_data["followed_user"]
 		try:
 			followed_user = User.objects.get(username=username)
-			print("User OK")
-			print(followed_user)
 		except User.DoesNotExist:
 			raise ValidationError("Followed user does not exist")
+		if self.user.username == username:
+			raise ValidationError("Vous ne pouvez pas vous abonner à vous-même ;-)")
+
+		try:
+			UserFollows.objects.get(followed_user=followed_user, user=self.user)
+			raise ValidationError("Abonnement déjà existant!")
+		except UserFollows.DoesNotExist:
+			pass
 
 		return followed_user
 

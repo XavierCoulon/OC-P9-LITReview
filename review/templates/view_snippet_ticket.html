@@ -2,12 +2,10 @@
 {% block content %}
     <div class="snippet_ticket">
         <h1>Visualisation d'un ticket</h1>
-        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.title }} ID: {{ ticket.pk }}</p>
         <p>{{ ticket.description }}</p>
-        <p>{{ ticket.image }}</p>
-        <p>
-            {% if not review_exists %}
-                <a href="{% url 'create_review'%}?ticket_id={{ticket.id}}">Créer critique</a></p>
+        <p> {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="image du ticket"></p>
             {% endif %}
     </div>
 

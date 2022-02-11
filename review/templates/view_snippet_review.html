@@ -1,15 +1,14 @@
 
 {% block content %}
-    <div class="review">
+    <div class="snippet_review">
         <h1>Visualisation d'une critique</h1>
-        <p>{{ review.headline }}</p>
+        <p>{{ review.headline }} ID: {{ review.pk }} </p>
         <p>{{ review.body }}</p>
         <p>{{ review.rating }}</p>
-q
+q       {% include "view_snippet_ticket.html" with ticket=ticket review_exists=True %}
     </div>
 
-    <h2>Ticket lié</h2>
-    {% include "view_snippet_ticket.html" with ticket=ticket review_exists=True %}
+    
 
 {% endblock %}
 

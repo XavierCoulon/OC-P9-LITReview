@@ -19,17 +19,27 @@ ul {
 }
 
 .container {
-    display: flex;
-    justify-content: center;
+    width: 70%;
+    margin: auto;
 }
 
 .post {
     border: solid;
+    margin: 2px;
+    padding: 2px;
 
 }
 
+.snippet_review {
+    background: yellow;
+}
+
+.snippet_ticket {
+    background: greenyellow;
+}
+
 #followup {
-    display: flex;
-    justify-content: center;
+    width: 70%;
+    margin: auto;
 }
 

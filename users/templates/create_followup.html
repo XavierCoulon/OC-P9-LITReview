@@ -13,19 +13,20 @@
 
         <div>
             <h1>Abonnement</h1>
-            <p> {% for user in followups %}
-                    {{ user.followed_user }}
+             {% for user in followups %}
+                 <p>   {{ user.followed_user }}
                 <a href="{% url 'delete_followup' id=user.id %}">Supprimer</a>
+                 </p>
                 {% endfor %}
-            </p>
+
         </div>
 
         <div>
             <h1>Abonnés</h1>
-            <p> {% for user in followers %}
-                    {{ user.user }}
-                {% endfor %}
-            </p>
+            {% for user in followers %}
+                     <p> {{ user.user }} </p>
+            {% endfor %}
+
         </div>
     </div>
 {% endblock %}
