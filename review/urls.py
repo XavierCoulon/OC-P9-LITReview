@@ -16,19 +16,20 @@ Including another URLconf
 from django.contrib.auth.decorators import login_required
 from django.urls import path
 from .views import TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux, \
-    ReviewDetailView, ReviewUpdateView, myposts, delete_review, delete_ticket, SnippetTicketDetailView
+    ReviewDetailView, ReviewUpdateView, myposts, delete_review, delete_ticket, SnippetTicketDetailView, search
 
 urlpatterns = [
     path("flux/", flux, name="flux"),
     path("myposts/", myposts, name="myposts"),
-    path("create_ticket/", login_required(TicketCreateView.as_view()), name="create_ticket"),
-    path("create_review/", login_required(ReviewCreateView.as_view()), name="create_review"),
-    path("create_ticket_review/", login_required(create_ticket_review), name="create_ticket_review"),
-    path("update_ticket/<int:pk>/", login_required(TicketUpdateView.as_view()), name="update_ticket"),
-    path("update_review/<int:pk>/", login_required(ReviewUpdateView.as_view()), name="update_review"),
-    path("view_ticket/<int:pk>/", login_required(TicketDetailView.as_view()), name="view_ticket"),
-    path("view_snippet_ticket/<int:pk>/", login_required(SnippetTicketDetailView.as_view()), name="view_snippet_ticket"),
-    path("view_review/<int:pk>/", login_required(ReviewDetailView.as_view()), name="view_review"),
-    path("delete_ticket/<int:pk>/", delete_ticket, name="delete_ticket"),
-    path("delete_review/<int:pk>/", delete_review, name="delete_review"),
+    path("search/", search, name="search"),
+    path("ticket/", TicketCreateView.as_view(), name="create_ticket"),
+    path("ticket/<int:pk>/", TicketDetailView.as_view(), name="view_ticket"),
+    path("ticket/<int:pk>/snippet", SnippetTicketDetailView.as_view(), name="view_snippet_ticket"),
+    path("ticket/<int:pk>/update", TicketUpdateView.as_view(), name="update_ticket"),
+    path("ticket/<int:pk>/delete", delete_ticket, name="delete_ticket"),
+    path("create_review/", ReviewCreateView.as_view(), name="create_review"),
+    path("review/<int:pk>/snippet", ReviewDetailView.as_view(), name="view_review"),
+    path("review/<int:pk>/update/", ReviewUpdateView.as_view(), name="update_review"),
+    path("review/<int:pk>/delete", delete_review, name="delete_review"),
+    path("ticket_review/", create_ticket_review, name="create_ticket_review"),
     ]

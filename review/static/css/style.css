@@ -1,45 +1,94 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    padding-top: 50px;
+  font-family: "Sora", sans-serif;
+  padding-top: 70px;
+}
+
+#index {
+  position: fixed;
+  width: 50%;
+  text-align: center;
+  align-items: center;
+  background-color: lavender;
+  opacity: 0.9;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+#index input, #index button {
+  width: 50%;
+  height: 20px;
+  font-size: 15px;
+  margin-top: 5px;
 }
 
 nav {
-    position: fixed;
-    top: 0;
-    height: 50px;
-    background-color:silver;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  height: 70px;
+  background-color: lavender;
+  width: 100%;
+  z-index: 10;
 }
-
-ul {
-    height: 100%;
-    width: 100%;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-evenly;
+nav ul {
+  height: 100%;
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+nav ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-size: large;
+}
+nav ul li a::after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  background-color: black;
+  width: 0%;
+  height: 2px;
+  transition: width 0.2s ease-in-out;
+}
+nav ul li a:hover::after {
+  width: 100%;
+  color: black;
 }
 
 .container {
-    width: 70%;
-    margin: auto;
+  width: 70%;
+  margin: auto;
 }
 
 .post {
-    border: solid;
-    margin: 2px;
-    padding: 2px;
-
+  border: solid;
+  margin: 2px;
+  padding: 2px;
 }
 
 .snippet_review {
-    background: yellow;
+  background: yellow;
 }
 
 .snippet_ticket {
-    background: greenyellow;
+  background: greenyellow;
 }
 
 #followup {
-    width: 70%;
-    margin: auto;
+  width: 70%;
+  margin: auto;
 }
 
+/*# sourceMappingURL=style.css.map */

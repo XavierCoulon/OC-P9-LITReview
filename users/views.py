@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import UserFollows
 from users.forms import UserFollowsForm
 
@@ -22,7 +23,7 @@ class SignUpView(CreateView):
 	success_url = reverse_lazy("login")
 
 
-class UserFollowsCreateView(CreateView):
+class UserFollowsCreateView(LoginRequiredMixin, CreateView):
 	model = UserFollows
 	template_name = "create_followup.html"
 	form_class = UserFollowsForm
@@ -48,6 +49,7 @@ class UserFollowsCreateView(CreateView):
 		return context
 
 
+@login_required
 def delete_followup(request, id):
 	followup = UserFollows.objects.get(pk=id)
 	followup.delete()

@@ -1,12 +1,16 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
-from django.forms import ModelForm, Form, CharField, TextInput
+from django.contrib.auth.forms import AuthenticationForm
+from django.forms import ModelForm, CharField
 from users.models import UserFollows
 
 
-#User = get_user_model()
+class UserLoginForm(AuthenticationForm):
+
+	def __init__(self, *args, **kwargs):
+		super(UserLoginForm, self).__init__(*args, **kwargs)
+		self.fields['username'].widget.attrs['placeholder'] = "Nom d'utilisateur"
+		self.fields['password'].widget.attrs['placeholder'] = "Mot de passe"
 
 
 class UserFollowsForm(ModelForm):

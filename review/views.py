@@ -1,8 +1,9 @@
+import requests
 from itertools import chain
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Value, CharField, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -78,6 +79,13 @@ def myposts(request):
 	return render(request, "myposts.html", context={"posts": posts})
 
 
+def search(request):
+	response = requests.get("https://www.googleapis.com/books/v1/volumes?q=intitle:au bonheur des dames+inauthor:zola")
+	data = response.json()
+	books = data["items"]
+	return render(request, "search.html", {"books": books})
+
+
 class SignUpView(CreateView):
 	model = User
 	template_name = "signup.html"
@@ -85,7 +93,7 @@ class SignUpView(CreateView):
 	success_url = reverse_lazy("login")
 
 
-class TicketCreateView(CreateView):
+class TicketCreateView(LoginRequiredMixin, CreateView):
 	model = Ticket
 	template_name = "create_ticket.html"
 	fields = ["title", "description", "image"]
@@ -96,30 +104,19 @@ class TicketCreateView(CreateView):
 		return super(TicketCreateView, self).form_valid(form)
 
 
-class TicketDetailView(DetailView):
+class TicketDetailView(LoginRequiredMixin, DetailView):
 	model = Ticket
 	template_name = "view_ticket.html"
 	context_object_name = "ticket"
 
 
-class SnippetTicketDetailView(DetailView):
+class SnippetTicketDetailView(LoginRequiredMixin, DetailView):
 	model = Ticket
 	template_name = "view_snippet_ticket.html"
 	context_object_name = "ticket"
 
-	# def get_context_data(self, **kwargs):
-	# 	context = super(SnippetTicketDetailView, self).get_context_data(**kwargs)
-	# 	print(self.kwargs["pk"])
-	#
-	# 	try:
-	# 		if Review.objects.get(ticket=self.kwargs["pk"]):
-	# 			context["review_exists"] = True
-	# 	except Review.DoesNotExist:
-	# 		pass
-	# 	return context
 
-
-class TicketUpdateView(UpdateView):
+class TicketUpdateView(LoginRequiredMixin, UpdateView):
 	model = Ticket
 	template_name = "update_ticket.html"
 	fields = ["title", "description", "image"]
@@ -130,7 +127,7 @@ class TicketUpdateView(UpdateView):
 		return super(TicketUpdateView, self).form_valid(form)
 
 
-class ReviewUpdateView(UpdateView):
+class ReviewUpdateView(LoginRequiredMixin, UpdateView):
 	model = Review
 	template_name = "update_review.html"
 	fields = ["rating", "headline", "body"]
@@ -141,7 +138,7 @@ class ReviewUpdateView(UpdateView):
 		return super(ReviewUpdateView, self).form_valid(form)
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
 	model = Review
 	template_name = "create_review.html"
 	fields = ["rating", "headline", "body"]
@@ -161,7 +158,7 @@ class ReviewCreateView(CreateView):
 		return super(ReviewCreateView, self).form_valid(form)
 
 
-class ReviewDetailView(DetailView):
+class ReviewDetailView(LoginRequiredMixin, DetailView):
 	model = Review
 	template_name = "view_review.html"
 	context_object_name = "review"
@@ -177,18 +174,21 @@ class ReviewDetailView(DetailView):
 		return context
 
 
+@login_required
 def delete_ticket(request, pk):
 	ticket = Ticket.objects.get(pk=pk)
 	ticket.delete()
 	return redirect("myposts")
 
 
+@login_required
 def delete_review(request, pk):
 	review = Review.objects.get(pk=pk)
 	review.delete()
 	return redirect("myposts")
 
 
+@login_required
 def create_ticket_review(request):
 	ticket_form = TicketForm()
 	review_form = ReviewForm()

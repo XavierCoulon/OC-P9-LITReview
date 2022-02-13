@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <div class="search">
+        <h1>Recherche</h1>
+            {% for book in books %}
+                <p>{{ book.volumeInfo.title }} </p>
+                <p><img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt=""></p>
+            {% endfor %}
+   </div>
+
+
+{% endblock %}
