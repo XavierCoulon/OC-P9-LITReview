@@ -3,8 +3,8 @@
 {% block content %}
    <div class="flux">
     <h1>Mon Flux</h1>
-        <p><a href="{% url 'create_ticket' %}"> Créer un ticket </a></p>
-        <p><a href="{% url 'create_ticket_review' %}"> Créer une critique </a></p>
+        <a href="{% url 'create_ticket' %}"> Créer un ticket </a>
+        <a href="{% url 'create_ticket_review' %}"> Créer une critique </a>
 
             {% for post in posts %}
                 {% if post.content_type == "TICKET" %}

@@ -1,12 +1,17 @@
 
 {% block content %}
-    <div class="snippet_ticket">
-        <h1>Visualisation d'un ticket</h1>
-        <p>{{ ticket.title }} ID: {{ ticket.pk }}</p>
-        <p>{{ ticket.description }}</p>
-        <p> {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="image du ticket"></p>
+    <div class="ticket">
+        <div class="ticket_img">
+            {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="image du ticket">
             {% endif %}
+        </div>
+        <ul class="ticket_details">
+            <li>Demande publiée par {{ ticket.user }} le {{ticket.time_created }}</li>
+            <li>Titre: {{ ticket.title }} </li>
+            <li>Description: {{ ticket.description }}</li>
+        </ul>
+        
     </div>
 
 {% endblock %}

@@ -1,12 +1,38 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+        <title>LITReview</title>
+    </head>
 
-    <h1>Sign Up</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Valider">
-    </form>
-
-{% endblock %}
+    <body>
+        {% block content %}
+        <div id="signup">
+                <img src="/media/LITReview_icon.png" alt="LITReview logo">
+                <form method="POST">
+                    {% csrf_token %}
+                    <p>{{ form.username }}</p>
+                    <p>{{ form.password1 }}</p>
+                    <p>{{ form.password2 }}</p>
+                    <button type="submit">Valider</button>
+                </form>
+                <p style="font-size: 5px;">{{ form.non_field_errors }}
+                {{ form.username.errors }}
+                {{ form.password1.errors }}
+                {{ form.password2.errors }}</p>
+                <br>
+                <a href="{% url 'index' %}">Accueil </a>
+                <br><br>
+        </div>
+        
+        {% endblock %}
+    </body>
+</html>

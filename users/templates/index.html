@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
     <title>LITReview</title>
 </head>
 
@@ -23,11 +23,12 @@
                 <p>{{ form.password }}</p>
                 <button type="submit">Connexion</button>
             </form>
-           {{ form.non_field_errors }}
-            {{ form.username.errors }}
-            {{ form.password.errors }}
+            <p> {{ form.non_field_errors }}</p>
+            <p> {{ form.username.errors }} </p>
+            <p>{{ form.password.errors }} </p>
             <br>
             <a href="{% url 'signup' %}">Inscrivez-vous ! </a>
+            <br><br>
     </div>
     {% endblock %}
 </body>

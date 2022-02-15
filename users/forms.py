@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField
 from users.models import UserFollows
 
@@ -11,6 +11,18 @@ class UserLoginForm(AuthenticationForm):
 		super(UserLoginForm, self).__init__(*args, **kwargs)
 		self.fields['username'].widget.attrs['placeholder'] = "Nom d'utilisateur"
 		self.fields['password'].widget.attrs['placeholder'] = "Mot de passe"
+
+
+class SignUpForm(UserCreationForm):
+
+	def __init__(self, *args, **kwargs):
+		super(SignUpForm, self).__init__(*args, **kwargs)
+		self.fields['username'].widget.attrs['placeholder'] = "Nom d'utilisateur"
+		self.fields['password1'].widget.attrs['placeholder'] = "Mot de passe"
+		self.fields['password2'].widget.attrs['placeholder'] = "Confirmation Mot de passe"
+		self.fields["password1"].help_text = None
+		self.fields["password2"].help_text = None
+		self.fields["username"].help_text = None
 
 
 class UserFollowsForm(ModelForm):

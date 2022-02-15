@@ -5,43 +5,25 @@
 }
 
 body {
-    font-family: "Sora", sans-serif;
-    padding-top: 70px;
-}
-
-#index{
-    position: fixed;
-    width: 50%;
-    text-align: center;
-    align-items: center;
-    background-color:lavender;
-    opacity: 0.9;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
-    input, button {
-        width: 50%;
-        height: 20px;
-        font-size: 15px;
-        margin-top: 5px;
-    }  
+    font-family: "Roboto", sans-serif;
+    padding-top: 50px;
 }
 
 nav {
     position: fixed;
     top: 0;
-    height: 70px;
+    height: 50px;
     background-color:lavender;
     width: 100%;
-    z-index: 10;
+
 
     ul {
         height: 100%;
-        width: 100%;
+        width: 80%;
+        margin: auto;
         list-style-type: none;
         display: flex;
-        justify-content: space-evenly;
+        justify-content:space-evenly;
 
         li {
             display: flex;
@@ -71,26 +53,29 @@ nav {
         }
     }
 
-
-
-.container {
-    width: 70%;
+.flux {
+    width: 60%;
     margin: auto;
 }
 
 .post {
-    border: solid;
-    margin: 2px;
-    padding: 2px;
-
-}
-
-.snippet_review {
-    background: yellow;
-}
-
-.snippet_ticket {
-    background: greenyellow;
+    padding: 10px;
+    margin: 5px;
+    .review {
+        background: lavender ;
+        opacity: 0.5;
+        width: 90%;
+        margin-left: 10%;
+    }
+    
+    .ticket {
+        background: lavender;
+        width: 90%;
+        display: flex;
+        justify-content: left;
+        align-items: top;
+        margin-bottom: 10px;
+    }
 }
 
 #followup {

@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from users.models import UserFollows
-from users.forms import UserFollowsForm
+from users.forms import UserFollowsForm, SignUpForm
 
 
 def index(request):
@@ -19,7 +19,7 @@ def index(request):
 class SignUpView(CreateView):
 	model = User
 	template_name = "signup.html"
-	form_class = UserCreationForm
+	form_class = SignUpForm
 	success_url = reverse_lazy("login")
 
 
