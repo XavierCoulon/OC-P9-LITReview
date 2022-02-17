@@ -5,16 +5,21 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  background-color: white;
   padding-top: 50px;
 }
 
 nav {
   position: fixed;
   top: 0;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
   height: 50px;
-  background-color: lavender;
+  background-color: lightgrey;
   width: 100%;
+  z-index: 10;
 }
 nav ul {
   height: 100%;
@@ -31,50 +36,107 @@ nav ul li {
 }
 nav ul li a {
   text-decoration: none;
-  color: black;
+  color: white;
   font-size: large;
 }
 nav ul li a::after {
   content: "";
   display: block;
   margin: 0 auto;
-  background-color: black;
+  background-color: white;
   width: 0%;
   height: 2px;
   transition: width 0.2s ease-in-out;
 }
 nav ul li a:hover::after {
   width: 100%;
-  color: black;
+  color: white;
 }
 
 .flux {
   width: 60%;
   margin: auto;
 }
-
-.post {
-  padding: 10px;
-  margin: 5px;
+.flux .links {
+  display: flex;
 }
-.post .review {
-  background: lavender;
-  opacity: 0.5;
-  width: 90%;
-  margin-left: 10%;
+.flux a {
+  display: flex;
+  text-decoration: none;
+  border-style: solid;
+  color: black;
+  background-color: white;
+  text-transform: uppercase;
 }
-.post .ticket {
-  background: lavender;
-  width: 90%;
+.flux hr {
+  border-color: lightgray;
+  border-top: 0;
+}
+.flux .post {
+  margin-top: 5px;
+}
+.flux .post .review_published {
+  background-color: burlywood;
+  opacity: 0.6;
+  font-style: italic;
+  display: inline-block;
+  color: white;
+}
+.flux .post .ticket_published {
+  background-color: cornflowerblue;
+  opacity: 0.6;
+  font-style: italic;
+  display: inline-block;
+  color: white;
+}
+.flux .post .review {
+  background: white;
+  width: 100%;
+  justify-content: right;
+}
+.flux .post .snippet_ticket {
+  margin-left: 30%;
+}
+.flux .post .ticket {
+  background: white;
+  width: 100%;
   display: flex;
   justify-content: left;
   align-items: top;
-  margin-bottom: 10px;
+}
+.flux .post .ticket ul {
+  list-style: none;
+}
+.flux .post .ticket .ticket_details {
+  margin-left: 10px;
+}
+
+#update_review input, #update_review area {
+  display: block;
 }
 
 #followup {
-  width: 70%;
-  margin: auto;
+  position: fixed;
+  width: 40%;
+  text-align: left;
+  align-items: center;
+  top: 20%;
+  left: 40%;
+}
+#followup input, #followup button {
+  width: 50%;
+  height: 20px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+#followup .errorlist {
+  font-size: smaller;
+  font-style: italic;
+  list-style-type: none;
+}
+#followup #abonnes, #followup #abonnement {
+  margin-top: 20px;
+  align-self: left;
 }
 
 /*# sourceMappingURL=style.css.map */

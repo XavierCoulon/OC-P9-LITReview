@@ -40,7 +40,6 @@ def viewable_reviews(user):
 	reviews = Review.objects.filter(
 		Q(user_id=user) | Q(user_id__in=followed_users) | Q(ticket__in=tickets)
 	)
-
 	return reviews
 
 
@@ -60,7 +59,7 @@ def flux(request):
 
 	tickets_with_review = viewable_tickets(request.user)[1]
 
-	return render(request, "flux.html", context={"posts": posts, "tickets_with_review": tickets_with_review})
+	return render(request, "flux.html", context={"posts": posts, "tickets_with_review": tickets_with_review })
 
 
 @login_required

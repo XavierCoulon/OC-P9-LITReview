@@ -2,26 +2,27 @@
 
 {% block content %}
    <div class="flux">
-    <h1>Mon Flux</h1>
-        <a href="{% url 'create_ticket' %}"> Créer un ticket </a>
-        <a href="{% url 'create_ticket_review' %}"> Créer une critique </a>
+        <div class="links">
+            <a href="{% url 'create_ticket' %}"> Créer un ticket </a>
+            <a href="{% url 'create_ticket_review' %}"> Créer une critique </a>
+        </div>
 
-            {% for post in posts %}
-                {% if post.content_type == "TICKET" %}
-                    <div class="post">
-                        <p><a href="{% url 'view_ticket' pk=post.id %}">TICKET: {{ post.title }}</a></p>
-                        {% include "view_snippet_ticket.html" with ticket=post review_exists=True %}
-                        {% if post not in tickets_with_review %}
-                            <a href="{% url 'create_review'%}?ticket_id={{post.id}}">Créer critique</a></p>
-                        {% endif %}
-                    </div>
-                {% elif post.content_type == "REVIEW" %}
-                    <div class="post">
-                        <p><a href="{% url 'view_review' pk=post.id %}">REVIEW: {{ post.headline }}</a></p>
-                        {% include "view_snippet_review.html" with review=post ticket=post.ticket %}
-                    </div>
-                {% endif %}
-            {% endfor %}
+        {% for post in posts %}
+            {% if post.content_type == "TICKET" %}
+                <div class="post">
+                    {% include "view_snippet_ticket.html" with ticket=post review_exists=True %}
+                    {% if post not in tickets_with_review %}
+                        <a href="{% url 'create_review'%}?ticket_id={{post.id}}">Créer critique</a></p>
+                    {% endif %}
+                    <br>
+                </div>
+            {% elif post.content_type == "REVIEW" %}
+                <div class="post">
+                    {% include "view_snippet_review.html" with review=post ticket=post.ticket ratings=ratings %}
+                </div>
+            {% endif %}
+        <hr>
+        {% endfor %}
 
    </div>
 

@@ -34,6 +34,8 @@ class UserFollowsForm(ModelForm):
 
 	def __init__(self, user, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.fields['followed_user'].widget.attrs['placeholder'] = "Nom d'utilisateur à suivre"
+		self.fields['followed_user'].label = ""
 		self.user = user
 
 	def clean_followed_user(self):
@@ -41,7 +43,7 @@ class UserFollowsForm(ModelForm):
 		try:
 			followed_user = User.objects.get(username=username)
 		except User.DoesNotExist:
-			raise ValidationError("Followed user does not exist")
+			raise ValidationError("Ce nom d'utilisateur n'existe pas.")
 		if self.user.username == username:
 			raise ValidationError("Vous ne pouvez pas vous abonner à vous-même ;-)")
 

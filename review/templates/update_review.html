@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div id="update_review">    
     <h1>Modification d'une critique</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Mettre à jour">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Mettre à jour">
 
-    </form>
+        </form>    
+</div>
 {% endblock %}

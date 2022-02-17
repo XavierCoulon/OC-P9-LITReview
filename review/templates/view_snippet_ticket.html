@@ -1,5 +1,8 @@
 
 {% block content %}
+
+    <p class="ticket_published">Demande publiée par {{ ticket.user }} le {{ticket.time_created }} </p>
+    <br><br>
     <div class="ticket">
         <div class="ticket_img">
             {% if ticket.image %}
@@ -7,11 +10,10 @@
             {% endif %}
         </div>
         <ul class="ticket_details">
-            <li>Demande publiée par {{ ticket.user }} le {{ticket.time_created }}</li>
-            <li>Titre: {{ ticket.title }} </li>
-            <li>Description: {{ ticket.description }}</li>
+            <li>📚 {{ ticket.title }} </li>
+            <li>{{ ticket.description }}</li>
         </ul>
-        
     </div>
+    
 
 {% endblock %}

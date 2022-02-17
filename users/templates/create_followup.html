@@ -3,30 +3,30 @@
 {% block content %}
     <div id="followup">
         <div>
-            <h1>S'abonner à un utilisateur</h1>
+            <h3>S'abonner à un utilisateur</h3>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.followed_user }}
                 <input type="submit" value="S'abonner">
+                {{ form.followed_user.errors }}
             </form>
         </div>
 
-        <div>
-            <h1>Abonnement</h1>
+        <div id="abonnement">
+            {% if followups %}
+            <h3>Abonnement</h3>
              {% for user in followups %}
                  <p>   {{ user.followed_user }}
                 <a href="{% url 'delete_followup' id=user.id %}">Supprimer</a>
                  </p>
                 {% endfor %}
-
+            {% endif %}
         </div>
-
-        <div>
-            <h1>Abonnés</h1>
-            {% for user in followers %}
-                     <p> {{ user.user }} </p>
-            {% endfor %}
-
+        <div id="abonnes">
+                <h3>Abonnés</h3>
+                {% for user in followers %}
+                         <p> {{ user.user }} </p>
+                {% endfor %}
         </div>
     </div>
 {% endblock %}
