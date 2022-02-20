@@ -127,14 +127,9 @@ nav {
     }
 }
 
-#update_review {
-    input, area{
-        display: block;
-    }
-}
 
 
-#followup {
+#followup, #update_review, #create_review, #create_ticket {
     position: fixed;
     width: 40%;
     text-align: left;
@@ -148,6 +143,8 @@ nav {
         font-size: 15px;
         margin-top: 5px;
     }  
+
+    
     .errorlist{
         font-size: smaller;
         font-style: italic;

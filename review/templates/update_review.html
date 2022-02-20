@@ -2,12 +2,14 @@
 
 {% block content %}
 <div id="update_review">    
-    <h1>Modification d'une critique</h1>
+    <div><h1>Modification d'une critique</h1></div>
+    <div>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form }}
+            {{ form.as_p }}
             <input type="submit" value="Mettre à jour">
 
         </form>    
+    </div>
 </div>
 {% endblock %}

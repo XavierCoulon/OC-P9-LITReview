@@ -111,11 +111,7 @@ nav ul li a:hover::after {
   margin-left: 10px;
 }
 
-#update_review input, #update_review area {
-  display: block;
-}
-
-#followup {
+#followup, #update_review, #create_review, #create_ticket {
   position: fixed;
   width: 40%;
   text-align: left;
@@ -123,18 +119,18 @@ nav ul li a:hover::after {
   top: 20%;
   left: 40%;
 }
-#followup input, #followup button {
+#followup input, #followup button, #update_review input, #update_review button, #create_review input, #create_review button, #create_ticket input, #create_ticket button {
   width: 50%;
   height: 20px;
   font-size: 15px;
   margin-top: 5px;
 }
-#followup .errorlist {
+#followup .errorlist, #update_review .errorlist, #create_review .errorlist, #create_ticket .errorlist {
   font-size: smaller;
   font-style: italic;
   list-style-type: none;
 }
-#followup #abonnes, #followup #abonnement {
+#followup #abonnes, #followup #abonnement, #update_review #abonnes, #update_review #abonnement, #create_review #abonnes, #create_review #abonnement, #create_ticket #abonnes, #create_ticket #abonnement {
   margin-top: 20px;
   align-self: left;
 }
