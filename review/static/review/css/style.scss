@@ -36,9 +36,11 @@ nav {
             justify-content: center;
             align-items: center;
 
-            a {
+            .nav {
                 text-decoration: none;
+                border: none;
                 color:white;
+                background-color: lightgray;
                 font-size:large;
                 
 
@@ -60,19 +62,26 @@ nav {
         }
     }
 
+a, input[type=submit] {
+    display: inline-block;
+    text-decoration: none;
+    border-style: solid;
+    color:black;
+    background-color: white;
+    text-transform: uppercase;  
+    margin: 5px;  
+    padding: 1px;
+
+    &:hover{
+        background-color: lightgray;
+    }
+
+}
+
+
 .flux {
     width: 60%;
     margin: auto;
-
-    a {
-        display: inline-block;
-        text-decoration: none;
-        border-style: solid;
-        color:black;
-        background-color: white;
-        text-transform: uppercase;  
-        margin: 5px;  
-    }
     
     hr {
         border-color: lightgray;
@@ -97,12 +106,6 @@ nav {
             display: inline-block;
             color: white;
         }
-        
-        .review {
-            background: white ;
-            width: 100%;
-            justify-content: right;
-        }
 
         .snippet_ticket {
             margin-left: 30%;
@@ -124,17 +127,15 @@ nav {
     }
 }
 
-
-
-#followup, #update_review, #create_review, #create_ticket, #create_review {
+.form {
     position: fixed;
-    width: 40%;
+    width: 60%;
     text-align: left;
     align-items: center;
     top: 10%;
-    left: 40%;
+    left: 30%;
     
-    input, textarea {
+    input[type=text], input[type=number], textarea {
         display: block;
         padding: 2px;
         border: 1px solid #ced4da;
@@ -146,21 +147,11 @@ nav {
         margin: 2px;
     }
 
-    
     .errorlist{
         font-size: smaller;
         font-style: italic;
         list-style-type: none;
     }
-    #abonnes, #abonnement{
-        margin-top: 20px;
-        align-self: left;
-    }
+   
 
 }
-
-#create_ticket{
-
-    
-}
-

@@ -34,12 +34,14 @@ nav ul li {
   justify-content: center;
   align-items: center;
 }
-nav ul li a {
+nav ul li .nav {
   text-decoration: none;
+  border: none;
   color: white;
+  background-color: lightgray;
   font-size: large;
 }
-nav ul li a::after {
+nav ul li .nav::after {
   content: "";
   display: block;
   margin: 0 auto;
@@ -48,16 +50,12 @@ nav ul li a::after {
   height: 2px;
   transition: width 0.2s ease-in-out;
 }
-nav ul li a:hover::after {
+nav ul li .nav:hover::after {
   width: 100%;
   color: white;
 }
 
-.flux {
-  width: 60%;
-  margin: auto;
-}
-.flux a {
+a, input[type=submit] {
   display: inline-block;
   text-decoration: none;
   border-style: solid;
@@ -65,6 +63,15 @@ nav ul li a:hover::after {
   background-color: white;
   text-transform: uppercase;
   margin: 5px;
+  padding: 1px;
+}
+a:hover, input[type=submit]:hover {
+  background-color: lightgray;
+}
+
+.flux {
+  width: 60%;
+  margin: auto;
 }
 .flux hr {
   border-color: lightgray;
@@ -87,11 +94,6 @@ nav ul li a:hover::after {
   display: inline-block;
   color: white;
 }
-.flux .post .review {
-  background: white;
-  width: 100%;
-  justify-content: right;
-}
 .flux .post .snippet_ticket {
   margin-left: 30%;
 }
@@ -109,32 +111,28 @@ nav ul li a:hover::after {
   margin-left: 10px;
 }
 
-#followup, #update_review, #create_review, #create_ticket, #create_review {
+.form {
   position: fixed;
-  width: 40%;
+  width: 60%;
   text-align: left;
   align-items: center;
   top: 10%;
-  left: 40%;
+  left: 30%;
 }
-#followup input, #followup textarea, #update_review input, #update_review textarea, #create_review input, #create_review textarea, #create_ticket input, #create_ticket textarea, #create_review input, #create_review textarea {
+.form input[type=text], .form input[type=number], .form textarea {
   display: block;
   padding: 2px;
   border: 1px solid #ced4da;
 }
-#followup label, #update_review label, #create_review label, #create_ticket label, #create_review label {
+.form label {
   display: inline-block;
   box-sizing: border-box;
   margin: 2px;
 }
-#followup .errorlist, #update_review .errorlist, #create_review .errorlist, #create_ticket .errorlist, #create_review .errorlist {
+.form .errorlist {
   font-size: smaller;
   font-style: italic;
   list-style-type: none;
-}
-#followup #abonnes, #followup #abonnement, #update_review #abonnes, #update_review #abonnement, #create_review #abonnes, #create_review #abonnement, #create_ticket #abonnes, #create_ticket #abonnement, #create_review #abonnes, #create_review #abonnement {
-  margin-top: 20px;
-  align-self: left;
 }
 
 /*# sourceMappingURL=style.css.map */

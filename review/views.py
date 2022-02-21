@@ -81,15 +81,26 @@ def myposts(request):
 @login_required()
 def search(request):
 	if request.method == 'POST':
-		form = SearchForm(request.POST)
-		if form.is_valid():
-			response = requests.get(f"https://www.googleapis.com/books/v1/volumes?q=intitle:{form.cleaned_data['titre']}+inauthor:{form.cleaned_data['auteur']}")
-			data = response.json()
-			books = data["items"]
-			return render(request, "search.html", {"form": form, "books": books})
+		if "search" in request.POST:
+			search_form = SearchForm(request.POST)
+			if search_form.is_valid():
+				response = requests.get(
+					f"https://www.googleapis.com/books/v1/volumes?q=intitle:{search_form.cleaned_data['titre']}"
+					f"+inauthor:{search_form.cleaned_data['auteur']}")
+				data = response.json()
+				books = data["items"]
+				create_ticket_form = TicketCreateForm()
+				return render(request, "search.html", {"search_form": search_form, "create_ticket_form": create_ticket_form, "books": books})
+		elif "create" in request.POST:
+			ticket = TicketCreateForm(request.POST)
+			ticket.instance.user = request.user
+
+			if ticket.is_valid():
+				ticket.save()
+				return redirect("myposts")
 	else:
-		form = SearchForm()
-		return render(request, "search.html", {"form": form})
+		search_form = SearchForm()
+		return render(request, "search.html", {"search_form": search_form})
 
 
 class SignUpView(CreateView):
@@ -136,6 +147,7 @@ class TicketUpdateView(LoginRequiredMixin, UpdateView):
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
 	model = Review
 	template_name = "update_review.html"
+	fields = ["rating", "headline", "body"]
 	success_url = reverse_lazy("myposts")
 
 	def form_valid(self, form):
@@ -151,14 +163,14 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ReviewCreateView, self).get_context_data(**kwargs)
-		ticket_id = self.request.GET.get("ticket_id")
+		ticket_id = self.kwargs["pk"]
 		ticket = Ticket.objects.get(pk=ticket_id)
 		context["ticket"] = ticket
 		return context
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
-		ticket_id = self.request.GET.get("ticket_id")
+		ticket_id = self.kwargs["pk"]
 		form.instance.ticket = Ticket.objects.get(pk=ticket_id)
 		return super(ReviewCreateView, self).form_valid(form)
 

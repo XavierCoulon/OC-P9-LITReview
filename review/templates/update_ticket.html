@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Modification d'un ticket</h1>
+<div class="form">    
+    <h3>Modification d'un ticket</h3>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Mettre à jour">
-
     </form>
+</div>
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div id="followup">
-        <div>
+    <div class="form">
+        
             <h3>S'abonner à un utilisateur</h3>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -10,9 +10,10 @@
                 <input type="submit" value="S'abonner">
                 {{ form.followed_user.errors }}
             </form>
-        </div>
+        
 
         <div id="abonnement">
+            <br>
             {% if followups %}
             <h3>Abonnement</h3>
              {% for user in followups %}
@@ -23,6 +24,7 @@
             {% endif %}
         </div>
         <div id="abonnes">
+            <br>
                 <h3>Abonnés</h3>
                 {% for user in followers %}
                          <p> {{ user.user }} </p>

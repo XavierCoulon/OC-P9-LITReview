@@ -5,18 +5,25 @@
         <h3>Recherche</h3>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Chercher"> 
+            {{ search_form }}
+            <input type="submit" name="search" value="Chercher"> 
+        </form>
         
-        <h3>Résultats</h3>
-        
-        {% for book in books %}
-                {% if book.volumeInfo.imageLinks.thumbnail %}
-                    <p>{{ book.volumeInfo.title }} </p>
-                    <p>{{ book.volumeInfo.authors.0 }} </p>
-                    <p><img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt=""></p>
-                {% endif %}
-        {% endfor %}
+        {% if books %}
+            <h3>Résultats</h3>
+            {% for book in books %}
+                    {% if book.volumeInfo.imageLinks.thumbnail %}
+                        <p>{{ book.volumeInfo.title }} </p>
+                        <p>{{ book.volumeInfo.authors.0 }} </p>
+                        <p><img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt=""></p>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ create_ticket_form.title }}
+                            <input type="submit" name="create" value="Créer ticket"> 
+                        </form>
+                    {% endif %}
+            {% endfor %}
+        {% endif %}
    </div>
 
 
