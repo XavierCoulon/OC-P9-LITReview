@@ -57,16 +57,14 @@ nav ul li a:hover::after {
   width: 60%;
   margin: auto;
 }
-.flux .links {
-  display: flex;
-}
 .flux a {
-  display: flex;
+  display: inline-block;
   text-decoration: none;
   border-style: solid;
   color: black;
   background-color: white;
   text-transform: uppercase;
+  margin: 5px;
 }
 .flux hr {
   border-color: lightgray;
@@ -111,26 +109,30 @@ nav ul li a:hover::after {
   margin-left: 10px;
 }
 
-#followup, #update_review, #create_review, #create_ticket {
+#followup, #update_review, #create_review, #create_ticket, #create_review {
   position: fixed;
   width: 40%;
   text-align: left;
   align-items: center;
-  top: 20%;
+  top: 10%;
   left: 40%;
 }
-#followup input, #followup button, #update_review input, #update_review button, #create_review input, #create_review button, #create_ticket input, #create_ticket button {
-  width: 50%;
-  height: 20px;
-  font-size: 15px;
-  margin-top: 5px;
+#followup input, #followup textarea, #update_review input, #update_review textarea, #create_review input, #create_review textarea, #create_ticket input, #create_ticket textarea, #create_review input, #create_review textarea {
+  display: block;
+  padding: 2px;
+  border: 1px solid #ced4da;
 }
-#followup .errorlist, #update_review .errorlist, #create_review .errorlist, #create_ticket .errorlist {
+#followup label, #update_review label, #create_review label, #create_ticket label, #create_review label {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 2px;
+}
+#followup .errorlist, #update_review .errorlist, #create_review .errorlist, #create_ticket .errorlist, #create_review .errorlist {
   font-size: smaller;
   font-style: italic;
   list-style-type: none;
 }
-#followup #abonnes, #followup #abonnement, #update_review #abonnes, #update_review #abonnement, #create_review #abonnes, #create_review #abonnement, #create_ticket #abonnes, #create_ticket #abonnement {
+#followup #abonnes, #followup #abonnement, #update_review #abonnes, #update_review #abonnement, #create_review #abonnes, #create_review #abonnement, #create_ticket #abonnes, #create_ticket #abonnement, #create_review #abonnes, #create_review #abonnement {
   margin-top: 20px;
   align-self: left;
 }

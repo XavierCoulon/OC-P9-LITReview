@@ -64,19 +64,16 @@ nav {
     width: 60%;
     margin: auto;
 
-    .links {
-        display: flex;    
-    }
-
     a {
-        display: flex;
+        display: inline-block;
         text-decoration: none;
         border-style: solid;
         color:black;
         background-color: white;
-        text-transform: uppercase;
+        text-transform: uppercase;  
+        margin: 5px;  
     }
-
+    
     hr {
         border-color: lightgray;
         border-top: 0;
@@ -129,20 +126,25 @@ nav {
 
 
 
-#followup, #update_review, #create_review, #create_ticket {
+#followup, #update_review, #create_review, #create_ticket, #create_review {
     position: fixed;
     width: 40%;
     text-align: left;
     align-items: center;
-    top: 20%;
+    top: 10%;
     left: 40%;
     
-    input, button {
-        width: 50%;
-        height: 20px;
-        font-size: 15px;
-        margin-top: 5px;
-    }  
+    input, textarea {
+        display: block;
+        padding: 2px;
+        border: 1px solid #ced4da;
+    }
+
+    label{
+        display: inline-block;
+        box-sizing: border-box;
+        margin: 2px;
+    }
 
     
     .errorlist{
@@ -155,5 +157,10 @@ nav {
         align-self: left;
     }
 
+}
+
+#create_ticket{
+
+    
 }
 

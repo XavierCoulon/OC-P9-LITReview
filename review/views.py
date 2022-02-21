@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView
 from review.models import Ticket, Review
-from review.forms import TicketForm, ReviewForm
+from review.forms import TicketForm, ReviewForm, TicketCreateForm, ReviewCreateForm, SearchForm
 from users.models import UserFollows
 
 
@@ -78,11 +78,18 @@ def myposts(request):
 	return render(request, "myposts.html", context={"posts": posts})
 
 
+@login_required()
 def search(request):
-	response = requests.get("https://www.googleapis.com/books/v1/volumes?q=intitle:au bonheur des dames+inauthor:zola")
-	data = response.json()
-	books = data["items"]
-	return render(request, "search.html", {"books": books})
+	if request.method == 'POST':
+		form = SearchForm(request.POST)
+		if form.is_valid():
+			response = requests.get(f"https://www.googleapis.com/books/v1/volumes?q=intitle:{form.cleaned_data['titre']}+inauthor:{form.cleaned_data['auteur']}")
+			data = response.json()
+			books = data["items"]
+			return render(request, "search.html", {"form": form, "books": books})
+	else:
+		form = SearchForm()
+		return render(request, "search.html", {"form": form})
 
 
 class SignUpView(CreateView):
@@ -95,7 +102,7 @@ class SignUpView(CreateView):
 class TicketCreateView(LoginRequiredMixin, CreateView):
 	model = Ticket
 	template_name = "create_ticket.html"
-	fields = ["title", "description", "image"]
+	form_class = TicketCreateForm
 	success_url = reverse_lazy("flux")
 
 	def form_valid(self, form):
@@ -129,7 +136,6 @@ class TicketUpdateView(LoginRequiredMixin, UpdateView):
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
 	model = Review
 	template_name = "update_review.html"
-	fields = ["rating", "headline", "body"]
 	success_url = reverse_lazy("myposts")
 
 	def form_valid(self, form):
@@ -140,7 +146,7 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
 	model = Review
 	template_name = "create_review.html"
-	fields = ["rating", "headline", "body"]
+	form_class = ReviewCreateForm
 	success_url = reverse_lazy("flux")
 
 	def get_context_data(self, **kwargs):
