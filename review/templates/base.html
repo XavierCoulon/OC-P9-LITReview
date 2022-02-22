@@ -8,7 +8,7 @@
     <meta name="viewpoect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'review/css/style.css' %}">
     <title>LITReview</title>
 </head>
@@ -16,12 +16,12 @@
 <body>
     <nav>
         <ul>
-            <li><a class="nav" href="{% url 'index' %}">LITReview</a></li>
-            <li><a class="nav" href="{% url 'flux' %}">Flux</a></li>
-            <li><a class="nav" href="{% url 'create_followup' %}">Abonnements</a></li>
-            <li><a class="nav" href="{% url 'myposts' %}">Posts</a></li>
-            <li><a class="nav" href="{% url 'search' %}">Recherche</a></li>
-            <li><a class="nav" href="{% url 'logout' %}">Déconnexion</a></li>
+            <li><a href="{% url 'index' %}">LITReview</a></li>
+            <li><a href="{% url 'flux' %}">Flux</a></li>
+            <li><a href="{% url 'create_followup' %}">Abonnements</a></li>
+            <li><a href="{% url 'myposts' %}">Posts</a></li>
+            <li><a href="{% url 'search' %}">Recherche</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
         </ul>
     </nav>
 

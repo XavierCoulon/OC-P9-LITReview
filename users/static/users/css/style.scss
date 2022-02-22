@@ -4,20 +4,17 @@
     padding: 0;
 }
 
-body {
-    font-family: "Open Sans", sans-serif;
-    padding-top: 70px;
-}
-
-#index, #signup {
+.form {
     position: fixed;
-    width: 50%;
+    width: 40%;
     text-align: center;
     align-items: center;
     background-color:#f2f2f2;
+    font-family: "Sora", sans-serif;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     input, button {
         width: 50%;
         height: 20px;

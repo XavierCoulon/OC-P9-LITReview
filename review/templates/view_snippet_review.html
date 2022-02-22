@@ -1,22 +1,18 @@
 
 {% block content %}
     
+    <p class="published review">Critique publiée par {{ review.user }} le {{review.time_created }}</p>
     <div class="review">
-        <p class="review_published">Critique publiée par {{ review.user }} le {{review.time_created }}</p>
-        <br><br>
         {% load filters %}        
         {% for i in review.rating|rating %}
             ⭐️
         {% endfor %}
         <b> {{ review.headline }} </b>
-        <br><br>
         <p>✒️ {{ review.body }}</p>
         
     </div>
     <div class="snippet_ticket">
-        <br>
         {% include "view_snippet_ticket.html" with ticket=ticket review_exists=True %}
-        
     </div>
     <br>
     

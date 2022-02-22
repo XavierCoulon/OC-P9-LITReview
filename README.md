@@ -20,7 +20,7 @@ Utilisation du framework Django + base de données locale SQLIte.
 
 ## 2. <u> Documentation</u>
 
-Sont disponibles sous le répertoire "doc" les documents suivants, fournis par OC :
+Sont disponibles sous le répertoire "[doc](doc)" les documents suivants, fournis par OC :
 - Diagramme UML de la base de données (LITReview_UML_Diagram.pdf),
 - Cahier des charges (LITReview_CDC.docx),
 - Wireframes (LITReview_Wireframes.pdf).
@@ -35,8 +35,9 @@ python3.9 -m venv .env
 source .env/bin/activate
 pip install -r requirements.txt
 python manage.py runserver
-'http://127.0.0.1:8000/'
 ```
+Site accessible via http://127.0.0.1:8000/
+
 ## 4. <u> Données </u>
 
 La base de données contient initialement 7 utilisateurs dont les login / password sont les suivants:

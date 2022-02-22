@@ -10,12 +10,12 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
-        <title>LITReview</title>
+        <title>LITReview Inscription</title>
     </head>
 
     <body>
         {% block content %}
-        <div id="signup">
+        <div class="form">
                 <img src="/media/LITReview_icon.png" alt="LITReview logo">
                 <form method="POST">
                     {% csrf_token %}
@@ -24,15 +24,15 @@
                     <p>{{ form.password2 }}</p>
                     <button type="submit">Valider</button>
                 </form>
-                <p style="font-size: 5px;">{{ form.non_field_errors }}
-                {{ form.username.errors }}
-                {{ form.password1.errors }}
-                {{ form.password2.errors }}</p>
+                <p>
+                    {{ form.non_field_errors }}
+                    {{ form.username.errors }}
+                    {{ form.password1.errors }}
+                    {{ form.password2.errors }}</p>
                 <br>
                 <a href="{% url 'index' %}">Accueil </a>
                 <br><br>
         </div>
-        
         {% endblock %}
     </body>
 </html>

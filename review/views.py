@@ -1,46 +1,16 @@
-import requests
 from itertools import chain
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Value, CharField, Q
+from django.db.models import Value, CharField
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView
 from review.models import Ticket, Review
 from review.forms import TicketForm, ReviewForm, TicketCreateForm, ReviewCreateForm, SearchForm
-from users.models import UserFollows
-
-
-def viewable_tickets(user):
-
-	# Liste des utilisateur suivis
-	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
-	# Liste des tickets ayant une critique
-	tickets_with_review_ids = [review.ticket_id for review in Review.objects.all()]
-	# Liste des tickets: ceux de l'utilisateur + ceux dont les utilisateurs sont dans l'abonnement
-	tickets = Ticket.objects.filter(
-		Q(user_id=user) | Q(user_id__in=followed_users)
-	)
-	# Liste des tickets avec critique
-	tickets_with_review = tickets.filter(id__in=tickets_with_review_ids)
-
-	return tickets, tickets_with_review
-
-
-def viewable_reviews(user):
-
-	# Liste des utilisateur suivis
-	followed_users = [user.followed_user for user in UserFollows.objects.filter(user_id=user)]
-	# Liste des tickets de l'utilisateur
-	tickets = [ticket.id for ticket in Ticket.objects.filter(user_id=user)]
-	# Liste des critiques de l'utilisateur + celles des utilisateurs suivis + celles dont le ticket a été créé par l'utilisateur
-	reviews = Review.objects.filter(
-		Q(user_id=user) | Q(user_id__in=followed_users) | Q(ticket__in=tickets)
-	)
-	return reviews
+from review.controller import viewable_tickets, viewable_reviews, get_books_with_pic
 
 
 @login_required
@@ -81,23 +51,9 @@ def myposts(request):
 @login_required()
 def search(request):
 	if request.method == 'POST':
-		if "search" in request.POST:
-			search_form = SearchForm(request.POST)
-			if search_form.is_valid():
-				response = requests.get(
-					f"https://www.googleapis.com/books/v1/volumes?q=intitle:{search_form.cleaned_data['titre']}"
-					f"+inauthor:{search_form.cleaned_data['auteur']}")
-				data = response.json()
-				books = data["items"]
-				create_ticket_form = TicketCreateForm()
-				return render(request, "search.html", {"search_form": search_form, "create_ticket_form": create_ticket_form, "books": books})
-		elif "create" in request.POST:
-			ticket = TicketCreateForm(request.POST)
-			ticket.instance.user = request.user
-
-			if ticket.is_valid():
-				ticket.save()
-				return redirect("myposts")
+		search_form = SearchForm(request.POST)
+		if search_form.is_valid():
+			return get_books_with_pic(request, search_form)
 	else:
 		search_form = SearchForm()
 		return render(request, "search.html", {"search_form": search_form})

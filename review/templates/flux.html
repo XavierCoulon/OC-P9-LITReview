@@ -6,7 +6,7 @@
             <a href="{% url 'create_ticket' %}"> Créer un ticket </a>
             <a href="{% url 'create_ticket_review' %}"> Créer une critique </a>
         </div>
-
+        <hr>
         {% for post in posts %}
             {% if post.content_type == "TICKET" %}
                 <div class="post">
@@ -14,7 +14,7 @@
                     {% if post not in tickets_with_review %}
                         <a href="{% url 'create_review' pk=post.id %}">Créer critique</a></p>
                     {% endif %}
-                    <br>
+
                 </div>
             {% elif post.content_type == "REVIEW" %}
                 <div class="post">

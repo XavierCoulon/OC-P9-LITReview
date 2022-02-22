@@ -15,7 +15,7 @@
 
 <body>
     {% block content %}
-    <div id="index">    
+    <div class="form">    
         <img src="/media/LITReview_icon.png" alt="LITReview logo">
             <form method="POST">
                 {% csrf_token %}
@@ -25,7 +25,7 @@
             </form>
             <p> {{ form.non_field_errors }}</p>
             <p> {{ form.username.errors }} </p>
-            <p>{{ form.password.errors }} </p>
+            <p> {{ form.password.errors }} </p>
             <br>
             <a href="{% url 'signup' %}">Inscrivez-vous ! </a>
             <br><br>

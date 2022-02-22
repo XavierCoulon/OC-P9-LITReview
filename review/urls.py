@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib.auth.decorators import login_required
 from django.urls import path
+
+from .controller import get_book_data
 from .views import TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux, \
     ReviewDetailView, ReviewUpdateView, myposts, delete_review, delete_ticket, SnippetTicketDetailView, search
 
@@ -22,6 +24,7 @@ urlpatterns = [
     path("flux/", flux, name="flux"),
     path("myposts/", myposts, name="myposts"),
     path("search/", search, name="search"),
+    path("search/<str:google_id>", get_book_data, name="google"),
     path("ticket/", TicketCreateView.as_view(), name="create_ticket"),
     path("ticket/<int:pk>/", TicketDetailView.as_view(), name="view_ticket"),
     path("ticket/<int:pk>/snippet", SnippetTicketDetailView.as_view(), name="view_snippet_ticket"),

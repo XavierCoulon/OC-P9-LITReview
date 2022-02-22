@@ -11,24 +11,26 @@
                 {{ form.followed_user.errors }}
             </form>
         
-
         <div id="abonnement">
             <br>
             {% if followups %}
-            <h3>Abonnement</h3>
-             {% for user in followups %}
-                 <p>   {{ user.followed_user }}
-                <a href="{% url 'delete_followup' id=user.id %}">Supprimer</a>
-                 </p>
-                {% endfor %}
+                <h3>Abonnement</h3>
+                {% for user in followups %}
+                    <p>   {{ user.followed_user }}
+                    <a href="{% url 'delete_followup' id=user.id %}">Supprimer</a>
+                    </p>
+                    {% endfor %}
             {% endif %}
         </div>
+        
         <div id="abonnes">
             <br>
+            {% if followers %}
                 <h3>Abonnés</h3>
                 {% for user in followers %}
                          <p> {{ user.user }} </p>
                 {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
