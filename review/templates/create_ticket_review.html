@@ -2,8 +2,7 @@
 
 {% block content %}
     <div class="form">
-        <div><h3>Création du ticket</h3></div>
-        <div>
+        <h3>Création du ticket</h3>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ ticket.as_p }}
@@ -13,6 +12,5 @@
             {{ review.as_p }}
             <input type="submit" value="Créer">
         </form>
-    </div>
     </div>
 {% endblock %}

@@ -2,14 +2,11 @@
 
 {% block content %}
 <div class="form">    
-    <div><h3>Modification d'une critique</h3></div>
-    <div>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Mettre à jour">
-
-        </form>    
-    </div>
+    <h3>Modification d'une critique</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Mettre à jour">
+    </form>
 </div>
 {% endblock %}

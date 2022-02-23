@@ -18,7 +18,6 @@
                     <a href="{% url 'delete_review' pk=post.id%}">Supprimer</a>
                 </div>
                 <div class="post">
-                    
                     {% include "view_snippet_review.html" with review=post ticket=post.ticket %}
                 </div>
             {% endif %}

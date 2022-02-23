@@ -1,41 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-   <div class="form">
-        <h3>Recherche</h3>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ search_form.as_p }}
-            <input type="submit" name="search" value="Chercher"> 
-        </form>
-        
-        {% if messages %}
-        <ul class="messages">
-        {% for message in messages %}
-            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+   
+        <div id="search">
+            <br>
+            <h4>Recherche basée sur l'API Google Books</h4>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ search_form }}
+                <input type="submit" name="search" value="Chercher"> 
+            </form>
+            
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
 
         {% if books %}
-        <h3>Résultats</h3>
-        
-        {% for book in books %}
-             {% if book.volumeInfo.imageLinks.thumbnail %}
-                <div class="resultats">
-                        <div class="ticket_img">
-                            <p><img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt=""></p>
-                        </div>
-                        <ul class="ticket_details">
-                            <li>{{ book.volumeInfo.title }}</li>
-                            <li>{{ book.volumeInfo.authors.0 }}</li>
-                        </ul>
+            <h3>Résultats</h3>
+            {% for book in books %}
+                 {% if book.volumeInfo.imageLinks.thumbnail %}
+                    <div class="resultat">
+                            <div class="resultat_img">
+                                <p><img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt=""></p>
+                            </div>
+                            <ul class="resultat_details">
+                                <li>{{ book.volumeInfo.title }}</li>
+                                <li>{{ book.volumeInfo.authors.0 }}</li>
+                                <li><a href="{% url 'google' google_id=book.id %}">Créer un ticket</a></li>
+                            </ul>
                     </div>
-                    <a href="{% url 'google' google_id=book.id %}">Créer un ticket</a>
-            {% endif %}
-        {% endfor %}
-            {% endif %}
-    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </div>
     
     
     

@@ -9,15 +9,12 @@
         {% endfor %}
         <b> {{ review.headline }} </b>
         <p>✒️ {{ review.body }}</p>
-        
+        <br>
     </div>
     <div class="snippet_ticket">
         {% include "view_snippet_ticket.html" with ticket=ticket review_exists=True %}
     </div>
     <br>
-    
-
-    
 
 {% endblock %}
 

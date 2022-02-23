@@ -4,6 +4,7 @@ from django.db import models
 from PIL import Image
 
 
+# Model for a ticket (= un demande de critique)
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
@@ -16,6 +17,7 @@ class Ticket(models.Model):
 
     IMAGE_MAX_SIZE = (200, 200)
 
+    # Resize automatically the image
     def resize_img(self):
         image = Image.open(self.image)
         image.thumbnail(self.IMAGE_MAX_SIZE)
@@ -27,6 +29,7 @@ class Ticket(models.Model):
             self.resize_img()
 
 
+# Model for a review (= une critique)
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(

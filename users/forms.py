@@ -2,9 +2,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms import ModelForm, CharField
-from users.models import UserFollows
+from .models import UserFollows
 
 
+# Form for authentification
 class UserLoginForm(AuthenticationForm):
 
 	def __init__(self, *args, **kwargs):
@@ -13,6 +14,7 @@ class UserLoginForm(AuthenticationForm):
 		self.fields['password'].widget.attrs['placeholder'] = "Mot de passe"
 
 
+# Form for sign up
 class SignUpForm(UserCreationForm):
 
 	def __init__(self, *args, **kwargs):
@@ -25,6 +27,7 @@ class SignUpForm(UserCreationForm):
 		self.fields["username"].help_text = None
 
 
+# Form for follow up
 class UserFollowsForm(ModelForm):
 	followed_user = CharField(required=True)
 
@@ -34,7 +37,7 @@ class UserFollowsForm(ModelForm):
 
 	def __init__(self, user, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.fields['followed_user'].widget.attrs['placeholder'] = "Nom d'utilisateur à suivre"
+		self.fields['followed_user'].widget.attrs['placeholder'] = "Utilisateur à suivre"
 		self.fields['followed_user'].label = ""
 		self.user = user
 
@@ -61,9 +64,3 @@ class UserFollowsForm(ModelForm):
 		if commit:
 			instance.save()
 		return instance
-
-
-
-
-
-

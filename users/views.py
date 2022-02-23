@@ -1,21 +1,21 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import TextInput
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from users.models import UserFollows
-from users.forms import UserFollowsForm, SignUpForm
+from .models import UserFollows
+from .forms import UserFollowsForm, SignUpForm
 
 
+# View for index
 def index(request):
 	return render(request, "index.html")
 
 
+# View for sign up
 class SignUpView(CreateView):
 	model = User
 	template_name = "signup.html"
@@ -23,6 +23,7 @@ class SignUpView(CreateView):
 	success_url = reverse_lazy("login")
 
 
+# View for follow up
 class UserFollowsCreateView(LoginRequiredMixin, CreateView):
 	model = UserFollows
 	template_name = "create_followup.html"
@@ -30,6 +31,7 @@ class UserFollowsCreateView(LoginRequiredMixin, CreateView):
 	success_url = reverse_lazy("create_followup")
 
 	def form_valid(self, form):
+		# In case user already followed
 		try:
 			return super(UserFollowsCreateView, self).form_valid(form)
 		except IntegrityError:

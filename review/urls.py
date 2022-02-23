@@ -13,12 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib.auth.decorators import login_required
 from django.urls import path
-
 from .controller import get_book_data
-from .views import TicketCreateView, TicketUpdateView, TicketDetailView, ReviewCreateView, create_ticket_review, flux, \
-    ReviewDetailView, ReviewUpdateView, myposts, delete_review, delete_ticket, SnippetTicketDetailView, search
+from .views import TicketCreateView, TicketUpdateView, ReviewCreateView, create_ticket_review, flux, ReviewUpdateView,\
+    myposts, delete_review, delete_ticket, search
 
 urlpatterns = [
     path("flux/", flux, name="flux"),
@@ -26,13 +24,10 @@ urlpatterns = [
     path("search/", search, name="search"),
     path("search/<str:google_id>", get_book_data, name="google"),
     path("ticket/", TicketCreateView.as_view(), name="create_ticket"),
-    path("ticket/<int:pk>/", TicketDetailView.as_view(), name="view_ticket"),
-    path("ticket/<int:pk>/snippet", SnippetTicketDetailView.as_view(), name="view_snippet_ticket"),
     path("ticket/<int:pk>/update", TicketUpdateView.as_view(), name="update_ticket"),
     path("ticket/<int:pk>/delete", delete_ticket, name="delete_ticket"),
     path("ticket/<int:pk>/review", ReviewCreateView.as_view(), name="create_review"),
-    path("review/<int:pk>/snippet", ReviewDetailView.as_view(), name="view_review"),
     path("review/<int:pk>/update/", ReviewUpdateView.as_view(), name="update_review"),
     path("review/<int:pk>/delete", delete_review, name="delete_review"),
     path("ticket_review/", create_ticket_review, name="create_ticket_review"),
-    ]
+]

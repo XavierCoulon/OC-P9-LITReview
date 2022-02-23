@@ -52,7 +52,7 @@ a:hover, input[type=submit]:hover {
   margin: auto;
 }
 .flux hr {
-  border-color: ced4da;
+  border-color: #ced4da;
   border-style: dashed;
   border-top: 0;
 }
@@ -83,7 +83,6 @@ a:hover, input[type=submit]:hover {
   width: 100%;
   display: flex;
   justify-content: left;
-  align-items: top;
   margin-top: 5px;
 }
 .flux .post .ticket ul {
@@ -124,6 +123,64 @@ a:hover, input[type=submit]:hover {
 }
 .form .resultats {
   display: flex;
+}
+
+.form_user {
+  position: fixed;
+  width: 40%;
+  text-align: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.form_user input, .form_user button {
+  width: 50%;
+  height: 20px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+.form_user .errorlist {
+  font-size: smaller;
+  font-style: italic;
+  list-style-type: none;
+}
+
+#followup {
+  width: 40%;
+  margin: auto;
+}
+#followup input {
+  height: 20px;
+  font-size: 15px;
+  margin-top: 5px;
+}
+#followup .errorlist {
+  font-size: smaller;
+  font-style: italic;
+  list-style-type: none;
+}
+
+#search {
+  width: 60%;
+  margin: auto;
+}
+#search .resultat {
+  background: white;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  margin-top: 5px;
+}
+#search .resultat ul {
+  list-style: none;
+}
+#search .resultat .resultat_details {
+  margin-left: 10px;
+}
+#search .resultat img {
+  border-radius: 3px;
 }
 
 /*# sourceMappingURL=style.css.map */

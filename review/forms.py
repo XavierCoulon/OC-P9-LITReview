@@ -1,7 +1,8 @@
 from django.forms import ModelForm, forms, CharField
-from review.models import Ticket, Review
+from .models import Ticket, Review
 
 
+# Form used for ticket creation
 class TicketCreateForm(ModelForm):
 	class Meta:
 		model = Ticket
@@ -11,6 +12,7 @@ class TicketCreateForm(ModelForm):
 		}
 
 
+# Form used for review creation
 class ReviewCreateForm(ModelForm):
 	class Meta:
 		model = Review
@@ -21,27 +23,7 @@ class ReviewCreateForm(ModelForm):
 		}
 
 
-class TicketForm(ModelForm):
-	class Meta:
-		model = Ticket
-		exclude = ["user"]
-		labels = {
-			"title": "Titre",
-		}
-
-
-class ReviewForm(ModelForm):
-	class Meta:
-		model = Review
-		exclude = ["user", "ticket"]
-		labels = {
-			"headline": "Titre",
-			"body": "Description",
-		}
-
-
+# Form used for Google Books API
 class SearchForm(forms.Form):
 	titre = CharField(max_length=30, required=True)
 	auteur = CharField(max_length=30, required=True)
-
-

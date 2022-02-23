@@ -16,7 +16,7 @@ Utilisation du framework Django + base de données locale SQLIte.
 - modification & suppression de ses tickets et critiques,
 - gestion d'aboonement à d'autres utilisateurs,
 - visualisation d'un flux de tickets / critiques,
-- recherche d'un livre via l'API Google Books (in progress) 
+- recherche d'un livre via l'API Google Books (cf [google doc](https://developers.google.com/books/docs/v1/using))
 
 ## 2. <u> Documentation</u>
 
