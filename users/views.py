@@ -20,7 +20,7 @@ class SignUpView(CreateView):
 	model = User
 	template_name = "signup.html"
 	form_class = SignUpForm
-	success_url = reverse_lazy("login")
+	success_url = reverse_lazy("index")
 
 
 # View for follow up
