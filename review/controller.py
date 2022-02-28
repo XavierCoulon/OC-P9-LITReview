@@ -69,21 +69,21 @@ def get_books_with_pic(request, form):
 		f"https://www.googleapis.com/books/v1/volumes?q=intitle:{form.cleaned_data['titre']}"
 		f"+inauthor:{form.cleaned_data['auteur']}")
 	data = response.json()
+	books_with_pic = []
 
 	# If no result in API
 	if data["totalItems"] == 0:
 		messages.warning(request, "Pas de résultat.")
-		return render(request, "search.html", {"search_form": form})
 	else:
 		books = data["items"]
 		# Look for results including a pic, max 10 results
-		books_with_pic = []
+
 		for i in range(0, min(len(books), 10)):
 			if "imageLinks" in books[i]["volumeInfo"]:
 				books_with_pic.append(books[i])
 		if len(books_with_pic) == 0:
 			messages.warning(request, "Pas de résultat intégrant une image.")
-		return render(request, "search.html", {"search_form": form, "books": books_with_pic})
+	return render(request, "search.html", {"search_form": form, "books": books_with_pic})
 
 
 def get_book_data(request, google_id):
